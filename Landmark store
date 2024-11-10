@@ -1,0 +1,36 @@
+INPUT desired_floor (n)
+IF desired_floor < 0 THEN
+    PRINT "Invalid Floor number"
+ELSE
+    PRINT "Enter the floors in which the lift will stop"
+    INPUT stop_floor1 (n1)
+    INPUT stop_floor2 (n2)
+    INPUT stop_floor3 (n3)
+
+    // Calculate the absolute difference between desired floor and each stop floor
+    diff1 = ABS(desired_floor - stop_floor1)
+    diff2 = ABS(desired_floor - stop_floor2)
+    diff3 = ABS(desired_floor - stop_floor3)
+
+    // Determine the closest floor
+    IF (diff1 < diff2 AND diff1 < diff3) THEN
+        nearest_floor = stop_floor1
+    ELSE IF (diff2 < diff1 AND diff2 < diff3) THEN
+        nearest_floor = stop_floor2
+    ELSE IF (diff3 < diff1 AND diff3 < diff2) THEN
+        nearest_floor = stop_floor3
+    ELSE
+        // Handle the case where there are two choices equidistant
+        IF (diff1 == diff2 AND desired_floor > stop_floor1 AND desired_floor > stop_floor2) THEN
+            nearest_floor = MAX(stop_floor1, stop_floor2) // Closest below the desired floor
+        ELSE IF (diff1 == diff3 AND desired_floor > stop_floor1 AND desired_floor > stop_floor3) THEN
+            nearest_floor = MAX(stop_floor1, stop_floor3)
+        ELSE IF (diff2 == diff3 AND desired_floor > stop_floor2 AND desired_floor > stop_floor3) THEN
+            nearest_floor = MAX(stop_floor2, stop_floor3)
+        ELSE
+            nearest_floor = MIN(stop_floor1, stop_floor2, stop_floor3) // Closest above the desired floor
+        ENDIF
+    ENDIF
+
+    PRINT "You may get down at floor number", nearest_floor
+ENDIF
